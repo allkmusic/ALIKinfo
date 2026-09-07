@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALIK — DJ sets, Bologna</title>
+<meta name="description" content="ALIK — live DJ sets. Hardtechno, hardstyle, uptempo. Bologna.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0d0b10;
+    --bg-alt: #151119;
+    --ink: #f3f1ec;
+    --ink-dim: #a79fb0;
+    --accent: #b48cff;
+    --line: rgba(243,241,236,0.1);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a{ color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  ::selection{ background: var(--accent); color: #0d0b10; }
+
+  /* subtle grain texture over whole page */
+  .grain{
+    position: fixed; inset:0; pointer-events:none; z-index: 500;
+    opacity: 0.05; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  section{
+    position: relative;
+    padding: 7rem 1.5rem;
+  }
+  @media (max-width: 720px){
+    section{ padding: 4.5rem 1.25rem; }
+  }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    height: 100svh;
+    min-height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0;
+    background: #000;
+  }
+  .hero video, .hero .hero-fallback{
+    position: absolute; inset:0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.55;
+    filter: saturate(1.05);
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse at 50% 40%, rgba(13,11,16,0.15), rgba(13,11,16,0.75) 65%, rgba(13,11,16,0.97) 100%);
+  }
+  .hero-content{
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0 1.5rem;
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+    animation: rise 1.1s cubic-bezier(.16,.8,.24,1) 0.15s forwards;
+  }
+  @keyframes rise{
+    to{ opacity:1; transform: translateY(0) scale(1); }
+  }
+  .hero-mark{
+    width: min(72vw, 460px);
+    filter: drop-shadow(0 0 40px rgba(180,140,255,0.25));
+  }
+  .hero-tagline{
+    font-size: clamp(1rem, 2.2vw, 1.25rem);
+    font-weight: 400;
+    color: var(--ink);
+    max-width: 32ch;
+    line-height: 1.5;
+  }
+  .hero-meta{
+    font-size: 0.85rem;
+    color: var(--ink-dim);
+    letter-spacing: 0.02em;
+  }
+  .hero-socials{
+    display: flex;
+    gap: 0.9rem;
+  }
+  .hero-social{
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba(243,241,236,0.25);
+    background: rgba(13,11,16,0.35);
+    backdrop-filter: blur(6px);
+    transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+  }
+  .hero-social:hover, .hero-social:focus-visible{
+    border-color: var(--accent);
+    background: rgba(180,140,255,0.12);
+    transform: translateY(-2px);
+  }
+  .hero-social svg{ width: 20px; height: 20px; display:block; }
+  .scroll-cue{
+    position: absolute;
+    bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    width: 1px; height: 46px;
+    background: linear-gradient(to bottom, transparent, var(--ink-dim) 40%, transparent);
+    opacity: 0.7;
+  }
+  .scroll-cue::after{
+    content:"";
+    position:absolute; top:0; left:50%;
+    width:5px; height:5px; margin-left:-2px;
+    border-radius:50%;
+    background: var(--ink-dim);
+    animation: drip 2.2s ease-in-out infinite;
+  }
+  @keyframes drip{
+    0%{ top:0; opacity:0; }
+    20%{ opacity:1; }
+    80%{ opacity:1; }
+    100%{ top:40px; opacity:0; }
+  }
+
+  /* ---------- BIO ---------- */
+  .bio{
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .bio video{
+    position: absolute; inset:0;
+    width:100%; height:100%;
+    object-fit: cover;
+    opacity: 0.32;
+  }
+  .bio::before{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, var(--bg) 0%, rgba(13,11,16,0.7) 16%, rgba(13,11,16,0.7) 84%, var(--bg) 100%);
+    z-index: 1;
+  }
+  .bio-inner{
+    position: relative;
+    z-index: 2;
+    padding: 7rem 1.5rem;
+  }
+  @media (max-width: 720px){
+    .bio-inner{ padding: 4.5rem 1.25rem; }
+  }
+  .bio .wrap{
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  @media (max-width: 800px){
+    .bio .wrap{ grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+  .bio-photo{
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+  }
+  .bio-photo img{
+    width:100%; height:100%; object-fit: cover;
+    display:block;
+    filter: grayscale(0.15) contrast(1.05);
+  }
+  .bio-photo::after{
+    content:"";
+    position:absolute; inset:0;
+    box-shadow: inset 0 0 60px rgba(0,0,0,0.5);
+  }
+  h2{
+    font-family: 'Archivo Black', sans-serif;
+    text-transform: uppercase;
+    font-size: clamp(1.5rem, 3vw, 2.15rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 0 0 1.3rem 0;
+    letter-spacing: 0.005em;
+  }
+  .bio p{
+    color: var(--ink-dim);
+    font-size: 1.02rem;
+    line-height: 1.7;
+    max-width: 46ch;
+    margin: 0 0 1.1rem 0;
+  }
+  .bio p:last-child{ margin-bottom:0; }
+  .bio p strong{ color: var(--ink); font-weight: 500; }
+
+  /* ---------- MEDIA SECTIONS (listen / watch) ---------- */
+  .media-section{
+    background-size: cover;
+    background-position: center;
+    isolation: isolate;
+  }
+  .media-section::before{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(13,11,16,0.94), rgba(13,11,16,0.88) 40%, rgba(13,11,16,0.97));
+    z-index: -1;
+  }
+  .media-section .wrap{ max-width: 760px; }
+  .media-kicker{
+    font-family: 'Archivo Black', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.85rem;
+    color: var(--ink-dim);
+    margin: 0 0 0.4rem 0;
+  }
+  .media-frame{
+    margin-top: 2rem;
+    border: 1px solid var(--line);
+    background: rgba(0,0,0,0.35);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .ratio-16-9{ position: relative; width:100%; padding-top: 56.25%; }
+  .ratio-16-9 iframe{
+    position:absolute; inset:0; width:100%; height:100%; border:0;
+  }
+  .media-fallback{
+    margin-top: 0.9rem;
+    font-size: 0.85rem;
+    color: var(--ink-dim);
+  }
+  .media-fallback a{
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  /* ---------- GALLERIA ---------- */
+  .galleria{
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+  }
+  .galleria video{
+    position: absolute; inset:0;
+    width:100%; height:100%;
+    object-fit: cover;
+    opacity: 0.4;
+  }
+  .galleria::before{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, var(--bg) 0%, rgba(13,11,16,0.55) 18%, rgba(13,11,16,0.55) 82%, var(--bg) 100%);
+    z-index: 1;
+  }
+  .galleria-inner{
+    position: relative;
+    z-index: 2;
+    padding: 7rem 1.5rem;
+  }
+  @media (max-width: 720px){
+    .galleria-inner{ padding: 4.5rem 1.25rem; }
+  }
+  .slideshow{
+    position: relative;
+    max-width: 520px;
+    margin: 2.2rem auto 0;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+  }
+  .slideshow .slide{
+    position: absolute; inset:0;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+  }
+  .slideshow .slide.active{ opacity: 1; z-index: 1; }
+  .slideshow .slide img{
+    width:100%; height:100%; object-fit: cover; display:block;
+    filter: grayscale(0.1) contrast(1.05);
+  }
+  .slide-nav{
+    position: absolute; top:50%; transform: translateY(-50%);
+    z-index: 3;
+    width: 38px; height: 38px;
+    display:flex; align-items:center; justify-content:center;
+    border-radius: 50%;
+    border: 1px solid rgba(243,241,236,0.3);
+    background: rgba(13,11,16,0.4);
+    backdrop-filter: blur(6px);
+    color: var(--ink);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: border-color 0.25s ease, background 0.25s ease;
+  }
+  .slide-nav:hover, .slide-nav:focus-visible{
+    border-color: var(--accent);
+    background: rgba(180,140,255,0.15);
+  }
+  .slide-nav.prev{ left: 0.8rem; }
+  .slide-nav.next{ right: 0.8rem; }
+  .slide-dots{
+    position: absolute; bottom: 0.9rem; left:0; right:0;
+    z-index: 3;
+    display:flex; justify-content:center; gap: 0.5rem;
+  }
+  .slide-dots .dot{
+    width: 7px; height: 7px; border-radius: 50%;
+    background: rgba(243,241,236,0.35);
+    border: none; padding:0; cursor:pointer;
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+  .slide-dots .dot.active{
+    background: var(--ink);
+    transform: scale(1.25);
+  }
+
+  #ascolta{ background-image: url('assets/booth-ring.jpg'); }
+  #guarda{ background-image: url('assets/cathedral.jpg'); }
+
+  /* ---------- FOLLOW / LINKS ---------- */
+  .segui{
+    background: var(--bg-alt);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .link-list{
+    margin-top: 2.2rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .link-row{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.4rem 0;
+    border-top: 1px solid var(--line);
+    transition: padding-left 0.25s ease, color 0.25s ease;
+  }
+  .link-list a:last-child .link-row{ border-bottom: 1px solid var(--line); }
+  .link-row:hover, .link-row:focus-visible{
+    padding-left: 0.6rem;
+    color: var(--accent);
+  }
+  .link-name{
+    font-family: 'Archivo Black', sans-serif;
+    text-transform: uppercase;
+    font-size: clamp(1.3rem, 3.4vw, 1.85rem);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  .link-handle{
+    font-size: 0.95rem;
+    color: var(--ink-dim);
+    white-space: nowrap;
+  }
+  .link-row:hover .link-handle, .link-row:focus-visible .link-handle{
+    color: inherit;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding: 3.5rem 1.5rem 3rem;
+    text-align: center;
+  }
+  footer img{
+    width: 90px;
+    opacity: 0.7;
+    margin-bottom: 1.2rem;
+  }
+  footer .foot-line{
+    font-size: 0.85rem;
+    color: var(--ink-dim);
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <video autoplay muted loop playsinline poster="assets/hero-poster.jpg">
+    <source src="assets/hero-loop.mp4" type="video/mp4">
+  </video>
+  <div class="hero-content">
+    <img class="hero-mark" src="assets/logo-white.png" alt="ALIK">
+    <div class="hero-socials">
+      <a class="hero-social" href="https://www.instagram.com/__alik__music/" target="_blank" rel="noopener" aria-label="ALIK on Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#f3f1ec" stroke-width="1.6">
+          <rect x="2.5" y="2.5" width="19" height="19" rx="5"/>
+          <circle cx="12" cy="12" r="4.6"/>
+          <circle cx="17.4" cy="6.6" r="1.1" fill="#f3f1ec" stroke="none"/>
+        </svg>
+      </a>
+      <a class="hero-social" href="https://youtu.be/EBB4LO1NKT0" target="_blank" rel="noopener" aria-label="ALIK on YouTube">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#f3f1ec" stroke-width="1.6">
+          <rect x="2.5" y="5" width="19" height="14" rx="4"/>
+          <path d="M10.3 9.3l5 2.7-5 2.7z" fill="#f3f1ec" stroke="none"/>
+        </svg>
+      </a>
+      <a class="hero-social" href="https://soundcloud.com/alik_music" target="_blank" rel="noopener" aria-label="ALIK on SoundCloud">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#f3f1ec" stroke-width="1.6" stroke-linecap="round">
+          <path d="M3 13v4M6 11v6M9 10v7M12 12v5"/>
+          <path d="M12 14.5c0-2.2 1.7-4 3.9-4 1.8 0 3.3 1.2 3.8 2.8h.3c1.7 0 3 1.3 3 3s-1.3 3-3 3H12"/>
+        </svg>
+      </a>
+    </div>
+    <p class="hero-meta">Bologna, Italy</p>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"></div>
+</section>
+
+<!-- BIO -->
+<section class="bio" id="bio">
+  <video autoplay muted loop playsinline poster="assets/bio-poster.jpg">
+    <source src="assets/bio-loop.mp4" type="video/mp4">
+  </video>
+  <div class="bio-inner">
+    <div class="wrap">
+      <div class="bio-photo">
+        <img src="assets/crew.jpg" alt="ALIK with the Balaklava Club collective">
+      </div>
+      <div>
+        <h2>Behind the Balaklava</h2>
+        <p><strong>ALIK</strong> was born and raised in raves, starting in 2020. The following year he moved into clubs — Bologna, Florence, Parma, Modena — bringing the same underground spirit to the booth.</p>
+        <p>That same 2021, he founded <strong>Balaklava Club</strong>, a collective that goes beyond music: it brings art and live performance into the club too.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERIA -->
+<section class="galleria" id="galleria">
+  <video autoplay muted loop playsinline poster="assets/gallery-poster.jpg">
+    <source src="assets/gallery-loop.mp4" type="video/mp4">
+  </video>
+  <div class="galleria-inner">
+    <div class="wrap">
+      <p class="media-kicker">Shots</p>
+      <h2>Live moments.</h2>
+      <div class="slideshow" id="scattiSlider">
+        <div class="slide active"><img src="assets/portrait-red.jpg" alt="ALIK, portrait"></div>
+        <div class="slide"><img src="assets/booth-arm.jpg" alt="ALIK behind the decks"></div>
+        <div class="slide"><img src="assets/booth-ring-2.jpg" alt="ALIK behind the decks, ring light"></div>
+        <div class="slide"><img src="assets/portrait-smoke.jpg" alt="ALIK, silhouette"></div>
+        <div class="slide"><img src="assets/crew-hearts.jpg" alt="The Balaklava Club collective"></div>
+        <button class="slide-nav prev" aria-label="Previous photo">&#8249;</button>
+        <button class="slide-nav next" aria-label="Next photo">&#8250;</button>
+        <div class="slide-dots">
+          <button class="dot active" data-index="0" aria-label="Photo 1"></button>
+          <button class="dot" data-index="1" aria-label="Photo 2"></button>
+          <button class="dot" data-index="2" aria-label="Photo 3"></button>
+          <button class="dot" data-index="3" aria-label="Photo 4"></button>
+          <button class="dot" data-index="4" aria-label="Photo 5"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH -->
+<section class="media-section" id="guarda">
+  <div class="wrap">
+    <p class="media-kicker">Watch</p>
+    <h2>The latest mix, in preview.</h2>
+    <div class="media-frame">
+      <div class="ratio-16-9">
+        <iframe
+          src="https://www.youtube.com/embed/EBB4LO1NKT0"
+          title="ALIK's mix video on YouTube"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+    <p class="media-fallback">Video not loading? <a href="https://youtu.be/EBB4LO1NKT0" target="_blank" rel="noopener">Watch it directly on YouTube.</a></p>
+  </div>
+</section>
+
+<!-- LISTEN -->
+<section class="media-section" id="ascolta">
+  <div class="wrap">
+    <p class="media-kicker">Listen</p>
+    <h2>The latest sets, ready on loop.</h2>
+    <div class="media-frame">
+      <iframe
+        title="ALIK's SoundCloud player"
+        width="100%" height="300" scrolling="no" frameborder="no"
+        allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Falik_music&color=%23b48cff&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FOLLOW -->
+<section class="segui" id="segui">
+  <div class="wrap">
+    <p class="media-kicker">Follow</p>
+    <h2>Stay updated on upcoming nights.</h2>
+    <div class="link-list">
+      <a href="https://www.instagram.com/__alik__music/" target="_blank" rel="noopener">
+        <div class="link-row">
+          <span class="link-name">Instagram</span>
+          <span class="link-handle">@__alik__music</span>
+        </div>
+      </a>
+      <a href="https://youtu.be/EBB4LO1NKT0" target="_blank" rel="noopener">
+        <div class="link-row">
+          <span class="link-name">YouTube</span>
+          <span class="link-handle">Watch the mixes</span>
+        </div>
+      </a>
+      <a href="https://soundcloud.com/alik_music" target="_blank" rel="noopener">
+        <div class="link-row">
+          <span class="link-name">SoundCloud</span>
+          <span class="link-handle">alik_music</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <img src="assets/logo-black.png" alt="ALIK" style="filter: invert(1); opacity:0.55;">
+  <p class="foot-line">Bologna, Italy — updated 2026</p>
+</footer>
+
+<script>
+(function(){
+  var root = document.getElementById('scattiSlider');
+  if(!root) return;
+  var slides = root.querySelectorAll('.slide');
+  var dots = root.querySelectorAll('.dot');
+  var current = 0;
+  var timer;
+
+  function show(i){
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (i + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+  function next(){ show(current + 1); }
+  function prev(){ show(current - 1); }
+  function startAuto(){
+    stopAuto();
+    timer = setInterval(next, 4500);
+  }
+  function stopAuto(){ if(timer) clearInterval(timer); }
+
+  root.querySelector('.slide-nav.next').addEventListener('click', function(){ next(); startAuto(); });
+  root.querySelector('.slide-nav.prev').addEventListener('click', function(){ prev(); startAuto(); });
+  dots.forEach(function(dot){
+    dot.addEventListener('click', function(){ show(parseInt(dot.dataset.index, 10)); startAuto(); });
+  });
+
+  root.addEventListener('mouseenter', stopAuto);
+  root.addEventListener('mouseleave', startAuto);
+
+  var touchStartX = null;
+  root.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, {passive:true});
+  root.addEventListener('touchend', function(e){
+    if(touchStartX === null) return;
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(dx) > 40){ dx < 0 ? next() : prev(); startAuto(); }
+    touchStartX = null;
+  }, {passive:true});
+
+  startAuto();
+})();
+</script>
+
+</body>
+</html>
