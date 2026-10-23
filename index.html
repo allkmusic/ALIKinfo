@@ -405,6 +405,138 @@
     color: inherit;
   }
 
+
+  /* ---------- BOOKING BANNER + MODAL ---------- */
+  .booking-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: -0.4rem;
+    padding: 0.6rem 1.3rem;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink);
+    background: rgba(180,140,255,0.14);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+  }
+  .booking-btn:hover, .booking-btn:focus-visible{
+    background: var(--accent);
+    color: #0d0b10;
+    transform: translateY(-2px);
+  }
+  .booking-btn svg{ width: 16px; height: 16px; display:block; }
+
+  dialog.booking-modal{
+    width: min(92vw, 480px);
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2rem 1.75rem 1.75rem;
+    background: var(--bg-alt);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  dialog.booking-modal::backdrop{ background: rgba(5,4,8,0.8); backdrop-filter: blur(4px); }
+  .booking-modal h3{
+    font-family: 'Archivo Black', sans-serif;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 1.4rem;
+    margin: 0 0 0.4rem;
+  }
+  .booking-modal .modal-sub{ color: var(--ink-dim); font-size: 0.9rem; margin: 0 0 1.3rem; line-height: 1.5; }
+  .modal-close{
+    position: absolute; top: 0.8rem; right: 0.9rem;
+    width: 34px; height: 34px;
+    background: none; border: none; color: var(--ink-dim);
+    font-size: 1.6rem; line-height: 1; cursor: pointer;
+  }
+  .modal-close:hover{ color: var(--accent); }
+  .booking-form label{
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 0 0 0.35rem;
+  }
+  .booking-form .field{ margin-bottom: 1rem; }
+  .booking-form input, .booking-form textarea{
+    width: 100%;
+    padding: 0.7rem 0.8rem;
+    font: inherit;
+    font-size: 0.95rem;
+    color: var(--ink);
+    background: rgba(0,0,0,0.35);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+  }
+  .booking-form textarea{ min-height: 110px; resize: vertical; }
+  .booking-form input:focus, .booking-form textarea:focus{ outline: none; border-color: var(--accent); }
+  .booking-form .hp{ position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+  .booking-submit{
+    width: 100%;
+    padding: 0.85rem;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #0d0b10;
+    background: var(--accent);
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .booking-submit:disabled{ opacity: 0.5; cursor: wait; }
+  .booking-status{ margin: 0.9rem 0 0; font-size: 0.88rem; color: var(--ink-dim); min-height: 1.2em; }
+  .booking-status.ok{ color: var(--accent); }
+  .booking-status a{ color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ---------- VIDEO CAROUSEL ---------- */
+  .vid-stage{ position: relative; }
+  .vid-slide{ position:absolute; inset:0; opacity:0; pointer-events:none; transition: opacity 0.7s ease; }
+  .vid-slide.active{ opacity:1; pointer-events:auto; z-index:1; }
+  .vid-thumb{
+    position:absolute; inset:0; width:100%; height:100%;
+    padding:0; border:0; background:#000; cursor:pointer; display:block;
+  }
+  .vid-thumb img{ width:100%; height:100%; object-fit:cover; display:block; opacity:0.85; transition: opacity 0.25s ease; }
+  .vid-thumb:hover img, .vid-thumb:focus-visible img{ opacity:1; }
+  .vid-play{
+    position:absolute; top:50%; left:50%; transform: translate(-50%,-50%);
+    width:68px; height:68px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background: rgba(13,11,16,0.6);
+    border:1px solid rgba(243,241,236,0.5);
+    backdrop-filter: blur(6px);
+  }
+  .vid-play svg{ width:26px; height:26px; margin-left:3px; }
+  .vid-nav{ z-index: 3; }
+  .vid-controls{
+    display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    margin-top: 0.9rem;
+  }
+  .vid-title{
+    font-size: 0.9rem; color: var(--ink-dim);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width:0;
+  }
+  .vid-dots{ display:flex; gap:0.5rem; flex-shrink:0; }
+  .vid-dots .dot{
+    width:7px; height:7px; border-radius:50%;
+    background: rgba(243,241,236,0.35);
+    border:none; padding:0; cursor:pointer;
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+  .vid-dots .dot.active{ background: var(--ink); transform: scale(1.25); }
+
   /* ---------- FOOTER ---------- */
   footer{
     padding: 3.5rem 1.5rem 3rem;
@@ -454,6 +586,13 @@
       </a>
     </div>
     <p class="hero-meta">Bologna, Italy</p>
+    <button type="button" class="booking-btn" id="bookingOpen" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="5" width="18" height="14" rx="2"/>
+        <path d="M3.5 6.5l8.5 6.5 8.5-6.5"/>
+      </svg>
+      Info Booking
+    </button>
   </div>
   <div class="scroll-cue" aria-hidden="true"></div>
 </section>
@@ -512,17 +651,18 @@
   <div class="wrap">
     <p class="media-kicker">Watch</p>
     <h2>The latest mix, in preview.</h2>
-    <div class="media-frame">
-      <div class="ratio-16-9">
-        <iframe
-          src="https://www.youtube.com/embed/EBB4LO1NKT0"
-          title="ALIK's mix video on YouTube"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
-        </iframe>
+    <div class="media-frame vid-stage" id="vidCarousel">
+      <div class="ratio-16-9" id="vidRatio">
+        <!-- le slide vengono create da JavaScript -->
       </div>
+      <button class="slide-nav prev vid-nav" aria-label="Previous video">&#8249;</button>
+      <button class="slide-nav next vid-nav" aria-label="Next video">&#8250;</button>
     </div>
-    <p class="media-fallback">Video not loading? <a href="https://youtu.be/EBB4LO1NKT0" target="_blank" rel="noopener">Watch it directly on YouTube.</a></p>
+    <div class="vid-controls">
+      <span class="vid-title" id="vidTitle"></span>
+      <div class="vid-dots" id="vidDots"></div>
+    </div>
+    <p class="media-fallback">Video not loading? <a id="vidFallback" href="https://youtu.be/EBB4LO1NKT0" target="_blank" rel="noopener">Watch it directly on YouTube.</a></p>
   </div>
 </section>
 
@@ -570,10 +710,216 @@
   </div>
 </section>
 
+<!-- BOOKING MODAL -->
+<dialog class="booking-modal" id="bookingModal" aria-labelledby="bookingTitle">
+  <button type="button" class="modal-close" id="bookingClose" aria-label="Close">&times;</button>
+  <h3 id="bookingTitle">Info Booking</h3>
+  <p class="modal-sub">Tell me about your event and I'll get back to you by email.</p>
+  <form class="booking-form" id="bookingForm" novalidate>
+    <div class="field">
+      <label for="bk-name">Name</label>
+      <input type="text" id="bk-name" name="name" autocomplete="name" required>
+    </div>
+    <div class="field">
+      <label for="bk-email">Your email</label>
+      <input type="email" id="bk-email" name="email" autocomplete="email" required>
+    </div>
+    <div class="field">
+      <label for="bk-event">Event / venue &amp; date</label>
+      <input type="text" id="bk-event" name="event">
+    </div>
+    <div class="field">
+      <label for="bk-msg">Message</label>
+      <textarea id="bk-msg" name="message" required></textarea>
+    </div>
+    <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button type="submit" class="booking-submit" id="bookingSubmit">Send</button>
+    <p class="booking-status" id="bookingStatus" role="status" aria-live="polite"></p>
+  </form>
+</dialog>
+
 <footer>
   <img src="assets/logo-black.png" alt="ALIK" style="filter: invert(1); opacity:0.55;">
   <p class="foot-line">Bologna, Italy — updated 2026</p>
 </footer>
+
+<script>
+/* ===== Booking modal ===== */
+(function(){
+  var BOOKING_EMAIL = 'Alikproda66@gmail.com';
+  var modal = document.getElementById('bookingModal');
+  var form = document.getElementById('bookingForm');
+  var status = document.getElementById('bookingStatus');
+  var submit = document.getElementById('bookingSubmit');
+  if(!modal || !form) return;
+
+  document.getElementById('bookingOpen').addEventListener('click', function(){
+    status.textContent = ''; status.className = 'booking-status';
+    if(modal.showModal) modal.showModal(); else modal.setAttribute('open','');
+  });
+  document.getElementById('bookingClose').addEventListener('click', function(){ modal.close(); });
+  modal.addEventListener('click', function(e){ if(e.target === modal) modal.close(); });
+
+  function mailtoFallback(d){
+    var body = 'Name: ' + d.name + '\nEmail: ' + d.email + '\nEvent: ' + d.event + '\n\n' + d.message;
+    return 'mailto:' + BOOKING_EMAIL + '?subject=' + encodeURIComponent('Booking info — ' + d.name) + '&body=' + encodeURIComponent(body);
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var d = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      event: form.event.value.trim(),
+      message: form.message.value.trim()
+    };
+    if(!d.name || !/^\S+@\S+\.\S+$/.test(d.email) || !d.message){
+      status.className = 'booking-status';
+      status.textContent = 'Please fill in name, a valid email and your message.';
+      return;
+    }
+    if(form._honey && form._honey.value) return; // spam bot
+    submit.disabled = true;
+    status.className = 'booking-status';
+    status.textContent = 'Sending…';
+
+    fetch('https://formsubmit.co/ajax/' + encodeURIComponent(BOOKING_EMAIL), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        name: d.name, email: d.email, event: d.event, message: d.message,
+        _subject: 'Booking info — ' + d.name,
+        _replyto: d.email,
+        _template: 'table'
+      })
+    }).then(function(r){ return r.json(); }).then(function(res){
+      if(res && (res.success === true || res.success === 'true')){
+        status.className = 'booking-status ok';
+        status.textContent = 'Thanks! Your message has been sent.';
+        form.reset();
+      } else { throw new Error('send failed'); }
+    }).catch(function(){
+      status.className = 'booking-status';
+      status.innerHTML = 'Could not send automatically. <a href="' + mailtoFallback(d) + '">Open in your email app</a>.';
+    }).then(function(){ submit.disabled = false; });
+  });
+})();
+
+/* ===== YouTube video carousel ===== */
+(function(){
+  /* --- CONFIGURAZIONE ---
+     1) CHANNEL_ID: l'ID del canale (inizia con "UC...") → i video si aggiornano da soli.
+     2) VIDEOS: elenco di riserva (usato se CHANNEL_ID è vuoto o il feed non risponde).
+        Aggiungi altri video con { id: 'ID_VIDEO', title: 'Titolo' }.  */
+  var CHANNEL_ID = '';
+  var MAX_VIDEOS = 8;
+  var ROTATE_MS = 6000;
+  var VIDEOS = [
+    { id: 'EBB4LO1NKT0', title: 'Alik DJ HardTechno - Martedì Techno (Mo)' },
+    { id: '368gSIwyPMc', title: 'ALIK DJ SET HARDTECHNO DOMENICATEKNICA' },
+    { id: '6WbP08-y5X4', title: 'ALIK Summer Set W Balaklava Club' },
+    { id: '5LR1bn445Bc', title: 'ALIK Set Hardtechno, Industrial (Modena)' }
+  ];
+
+  var ratio = document.getElementById('vidRatio');
+  var dotsBox = document.getElementById('vidDots');
+  var titleEl = document.getElementById('vidTitle');
+  var fallback = document.getElementById('vidFallback');
+  var root = document.getElementById('vidCarousel');
+  if(!ratio) return;
+
+  var current = 0, timer = null, playing = false, slides = [], dots = [];
+  var PLAY_SVG = '<svg viewBox="0 0 24 24" fill="#f3f1ec"><path d="M6 4l14 8-14 8z"/></svg>';
+
+  function build(){
+    ratio.innerHTML = ''; dotsBox.innerHTML = ''; slides = []; dots = []; current = 0; playing = false;
+    VIDEOS.forEach(function(v, i){
+      var slide = document.createElement('div');
+      slide.className = 'vid-slide' + (i === 0 ? ' active' : '');
+      var btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'vid-thumb';
+      btn.setAttribute('aria-label', 'Play: ' + (v.title || 'video'));
+      btn.innerHTML = '<img loading="lazy" alt="" src="https://i.ytimg.com/vi/' + v.id + '/hqdefault.jpg"><span class="vid-play">' + PLAY_SVG + '</span>';
+      btn.addEventListener('click', function(){ play(i); });
+      slide.appendChild(btn);
+      ratio.appendChild(slide);
+      slides.push(slide);
+
+      var dot = document.createElement('button');
+      dot.type = 'button'; dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Video ' + (i + 1));
+      dot.addEventListener('click', function(){ show(i); start(); });
+      dotsBox.appendChild(dot); dots.push(dot);
+    });
+    updateMeta();
+    var single = VIDEOS.length < 2;
+    root.querySelectorAll('.vid-nav').forEach(function(b){ b.style.display = single ? 'none' : ''; });
+    dotsBox.style.display = single ? 'none' : '';
+    start();
+  }
+
+  function resetSlide(i){
+    var slide = slides[i];
+    if(!slide || !slide.querySelector('iframe')) return;
+    slide.querySelector('iframe').remove();
+    slide.querySelector('.vid-thumb').style.display = '';
+  }
+  function play(i){
+    stop(); playing = true;
+    var slide = slides[i], v = VIDEOS[i];
+    slide.querySelector('.vid-thumb').style.display = 'none';
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube.com/embed/' + v.id + '?autoplay=1&rel=0';
+    f.title = v.title || 'ALIK video on YouTube';
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    f.allowFullscreen = true;
+    f.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0';
+    slide.appendChild(f);
+  }
+  function updateMeta(){
+    var v = VIDEOS[current];
+    titleEl.textContent = v.title || '';
+    fallback.href = 'https://youtu.be/' + v.id;
+  }
+  function show(i){
+    resetSlide(current);
+    slides[current].classList.remove('active'); dots[current].classList.remove('active');
+    current = (i + VIDEOS.length) % VIDEOS.length;
+    slides[current].classList.add('active'); dots[current].classList.add('active');
+    playing = false;
+    updateMeta();
+  }
+  function start(){
+    stop();
+    if(VIDEOS.length < 2 || playing) return;
+    timer = setInterval(function(){ show(current + 1); }, ROTATE_MS);
+  }
+  function stop(){ if(timer){ clearInterval(timer); timer = null; } }
+
+  root.querySelector('.vid-nav.next').addEventListener('click', function(){ show(current + 1); start(); });
+  root.querySelector('.vid-nav.prev').addEventListener('click', function(){ show(current - 1); start(); });
+  root.addEventListener('mouseenter', stop);
+  root.addEventListener('mouseleave', function(){ if(!playing) start(); });
+
+  build();
+
+  /* Carica automaticamente gli ultimi video dal canale (feed RSS via rss2json) */
+  if(CHANNEL_ID){
+    var feed = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID;
+    fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed))
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if(!data || data.status !== 'ok' || !data.items || !data.items.length) return;
+        var list = data.items.slice(0, MAX_VIDEOS).map(function(it){
+          var m = (it.guid || it.link || '').match(/(?:yt:video:|v=)([\w-]{11})/);
+          return m ? { id: m[1], title: it.title } : null;
+        }).filter(Boolean);
+        if(list.length){ VIDEOS = list; build(); }
+      })
+      .catch(function(){ /* resta la lista di riserva */ });
+  }
+})();
+</script>
 
 <script>
 (function(){
